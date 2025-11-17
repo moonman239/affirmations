@@ -1,21 +1,313 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* ============================
+   Base Reset & Layout
+   ============================ */
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  /* Respect user font size preferences */
+  font-size: 100%;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
+  color: #111827;
+  /* Dark gray on light background (good contrast) */
+  background-color: #f3f4f6;
+  /* Light gray */
+}
+
+/* Skip link for keyboard users */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 100;
+  background: #111827;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  left: 0.5rem;
+  top: 0.5rem;
+}
+
+/* ============================
+   Page Structure
+   ============================ */
+
+.page-wrapper {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+header {
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 2rem;
+  margin: 0 0 0.25rem;
+}
+
+header p {
+  margin: 0;
+  max-width: 40rem;
+  color: #374151;
+}
+
+/* ============================
+   Affirmation Card Styles
+   ============================ */
+
+.affirmation-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.25rem;
+}
+
+/* One column on small screens, more on wider screens */
+@media (min-width: 40rem) {
+  .affirmation-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .affirmation-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Individual affirmation card */
+.affirmation-card {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 7rem;
+}
+
+/* Ensure readable text and good contrast */
+.affirmation-text {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.affirmation-meta {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+/* ============================
+   Current / Highlighted Affirmation
+   ============================ */
+
+.affirmation-current {
+  border: 2px solid #2563eb;
+  /* Accessible blue */
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* ============================
+   Buttons & Controls
+   ============================ */
+
+.controls {
+  margin: 2rem 0 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+button,
+.controls a {
+  font: inherit;
+  border-radius: 999px;
+  border: 1px solid #1f2933;
+  padding: 0.5rem 1.25rem;
+  background-color: #111827;
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* High-contrast focus state that is not color-only */
+button:focus-visible,
+.controls a:focus-visible,
+.affirmation-card:focus-visible {
+  outline: 3px solid #f97316;
+  /* Orange focus ring */
+  outline-offset: 3px;
+}
+
+/* Hover & active states with sufficient contrast */
+button:hover,
+.controls a:hover {
+  background-color: #1f2937;
+}
+
+button:active,
+.controls a:active {
+  background-color: #000000;
+}
+
+/* Disabled button */
+button[disabled],
+button[aria-disabled="true"] {
+  background-color: #9ca3af;
+  border-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* ============================
+   Typography & Readability
+   ============================ */
+
+main {
+  font-size: 1rem;
+}
+
+/* Increase size slightly on larger screens */
+@media (min-width: 48rem) {
+  main {
+    font-size: 1.0625rem;
+  }
+}
+
+/* Provide enough spacing between sections */
+section {
+  margin-bottom: 2rem;
+}
+
+/* Links */
+a {
+  color: #2563eb;
+}
+
+/* Ensure visible focus and clear state for links */
+a:focus-visible {
+  outline: 3px solid #f97316;
+  outline-offset: 2px;
+}
+
+/* Underline on hover for better affordance */
+a:hover {
+  text-decoration: underline;
+}
+
+/* ============================
+   Dark Mode (Prefers-Color-Scheme)
+   ============================ */
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #020617;
+    color: #e5e7eb;
+  }
+
+  header p {
+    color: #cbd5f5;
+  }
+
+  .affirmation-card {
+    background-color: #020617;
+    border-color: #1e293b;
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.6);
+  }
+
+  .affirmation-text {
+    color: #f9fafb;
+  }
+
+  .affirmation-meta {
+    color: #9ca3af;
+  }
+
+  button,
+  .controls a {
+    background-color: #1f2937;
+    border-color: #e5e7eb;
+    color: #f9fafb;
+  }
+
+  button:hover,
+  .controls a:hover {
+    background-color: #111827;
+  }
+
+  a {
+    color: #60a5fa;
+  }
+}
+
+/* ============================
+   Live Region / Status Messages
+   ============================ */
+
+.status-message {
+  margin-top: 1rem;
+  font-size: 0.9375rem;
+  color: #065f46;
+  /* Deep green on light background */
+}
+
+@media (prefers-color-scheme: dark) {
+  .status-message {
+    color: #6ee7b7;
+    /* Light green in dark mode */
+  }
+}
+
+/* ============================
+   Utility Classes
+   ============================ */
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }

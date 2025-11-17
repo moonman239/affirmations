@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Next.js + Chrome + WebWorkers",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "runtimeArgs": ["--remote-debugging-port=9222"],
+      "sourceMaps": true,
+      "webRoot": "${workspaceFolder}",
+      "skipFiles": ["<node_internals>/**"],
+      "trace": true
+    }
+  ]
+}
