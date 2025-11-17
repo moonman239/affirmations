@@ -15,7 +15,7 @@ async function scheduleNotifications(today: Date,startDate:Date)
       const notify = async ()=>{
         const currentDate = new Date();
         const notification = new Notification(dailyAffirmation(currentDate));
-        notification.onshow = ()=>console.log("showed notification");
+        notification.onshow = (e)=>console.log(`showed notification: ${notification.title}`);
       }
       setTimeout(()=>{
         notify();
