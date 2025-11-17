@@ -12,10 +12,10 @@ async function scheduleNotifications(today: Date,startDate:Date)
     if (result === "granted")
     {
       // schedule notifications for every 24 hours starting on startDate
-      const notify = ()=>{
+      const notify = async ()=>{
         const currentDate = new Date();
-        const swr = new ServiceWorkerRegistration();
-        swr.showNotification(dailyAffirmation(currentDate));
+        const notification = new Notification(dailyAffirmation(currentDate));
+        notification.onshow = ()=>console.log("showed notification");
       }
       setTimeout(()=>{
         notify();
