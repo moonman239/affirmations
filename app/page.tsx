@@ -3,11 +3,14 @@ import Image from "next/image";
 import { AffirmationComponent } from "./AffirmationComponent";
 import dailyAffirmation from "./affirmation";
 import { useState } from "react";
+import moment, { Moment } from "moment";
 
-async function scheduleNotifications(today: Date,startDate:Date)
+async function scheduleNotifications(startingMoment:Moment)
 {
   try
   {
+    console.log(`starting notification at ${startingMoment}`)
+    const diff = startingMoment.diff(moment(),"milliseconds");
     const result = await Notification.requestPermission();
     if (result === "granted")
     {
@@ -20,7 +23,7 @@ async function scheduleNotifications(today: Date,startDate:Date)
       setTimeout(()=>{
         notify();
         setInterval(notify,8.64e+7)
-      },startDate.getTime() - today.getTime());
+      },diff);
     }
   }
   catch (e)
@@ -31,7 +34,7 @@ async function scheduleNotifications(today: Date,startDate:Date)
 }
 
 export default function Home() {
-  const [selectedDate,setSelectedDate] = useState<Date>(new Date());
+  const [selectedMoment,setSelectedMoment] = useState<Moment | null>(null);
   return (
    <div className="page-wrapper">
     <header>
@@ -42,19 +45,32 @@ export default function Home() {
     <form onSubmit={
       (event)=>{
         event.preventDefault();
-        const today = new Date();
-        scheduleNotifications(today,selectedDate);
+        if (selectedMoment !== null)
+          scheduleNotifications(selectedMoment);
+        else
+          alert("Please select a time to start with.");
       }
     }>
-      Notify me every 24 hours, starting this date and time: <br/>
-      <input type="datetime-local" onChange={(event)=>{
-        const date = new Date(event.target.value);
-        if (date !== null)
-          setSelectedDate(date);
+      Notify me every day at this time: <br/>
+      <input type="time" onChange={(event)=>{
+        if (event.target.value)
+        {
+          const currentMoment = moment();
+          console.log(`time value: ${event.target.value}`);
+          const selectedTime = moment(event.target.value,"HH:mm");
+          /*
+          With MomentJS, any time-only value absolutely must have a format,
+          otherwise Moment treats it as an invalid date 
+          and everything downstream (like diff()) breaks. */
+          if (selectedTime.isBefore(currentMoment))
+            // user wants to be notified tomorrow, not today
+            selectedTime.add(1,"day");
+          setSelectedMoment(selectedTime);
+        }
         else
-          alert("Please select a valid date");
+          alert("Please select a valid time.");
       }}/>
-      <button>
+      <button type="submit">
         Notify me
       </button>
     </form>
