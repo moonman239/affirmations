@@ -10,7 +10,11 @@
   },
   "dependencies": {
     "@types/moment": "^2.13.0",
+    "@vercel/postgres": "^0.10.0",
+    "firebase": "^12.6.0",
+    "firebase-admin": "^13.6.0",
     "moment": "^2.30.1",
+    "moment-timezone": "^0.6.0",
     "next": "15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
