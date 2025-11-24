@@ -15,8 +15,8 @@ import {
   getToken,
 } from "firebase/messaging";
 import moment,{ Moment } from "moment-timezone";
-import {firebaseConfig} from "./firebaseConfig";
-import {fcmVapidKey} from "./fcmVapidKey";
+import {firebaseConfig} from "./firebase.admin.config";
+import {fcmVapidKey} from "./fcmVapidKey"
 if (
   !firebaseConfig.apiKey ||
   !firebaseConfig.authDomain ||

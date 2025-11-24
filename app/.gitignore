@@ -1,3 +1,3 @@
 # ignore firebase config so it doesnt show up on GitHub
-firebaseConfig.js
+firebase.admin.config.js
 fcmVapidKey.js
