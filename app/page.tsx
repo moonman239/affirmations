@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { AffirmationComponent } from "./AffirmationComponent";
 import dailyAffirmation from "./affirmation";
 import { useState } from "react";

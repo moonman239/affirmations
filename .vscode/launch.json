@@ -3,8 +3,7 @@
   "configurations": [
     {
       "name": "Next.js + Chrome + WebWorkers",
-      ""
-      "type": "pwa-chrome",
+      "type": "chrome",
       "request": "launch",
       "url": "http://localhost:3000",
       "runtimeArgs": ["--remote-debugging-port=9222"],
