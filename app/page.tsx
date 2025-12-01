@@ -17,10 +17,18 @@ export default function Home() {
     <form onSubmit={
       async (event)=>{
         event.preventDefault();
-        if (selectedMoment !== null)
-          await getFcmTokenAndSchedule(selectedMoment);
-        else
-          alert("Please select a time to start with.");
+        const p = await Notification.requestPermission();
+        if (p === "granted") // permission granted
+        {
+          console.info("notification permission granted");
+          if (selectedMoment !== null)
+            await getFcmTokenAndSchedule(selectedMoment);
+          else
+            alert("Please select a time to start with.");
+        }
+        else// permission not explicitly granted
+          alert("Permission needed to send notifications.");
+          
       }
     }>
       Notify me every day at this time: <br/>

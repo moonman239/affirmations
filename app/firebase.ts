@@ -53,7 +53,10 @@ async function registerFcmServiceWorker(): Promise<ServiceWorkerRegistration> {
   }
 
   // This must match your actual SW path in public/
-  return navigator.serviceWorker.register("/firebase-messaging-sw.js");
+  await navigator.serviceWorker.register("/firebase-messaging-sw.js");
+  const registration = await navigator.serviceWorker.ready;
+  console.log("regisered FCM service worker");
+  return registration
 }
 
 // Core helper to actually get the FCM token
